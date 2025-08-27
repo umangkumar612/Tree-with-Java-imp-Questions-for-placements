@@ -1,0 +1,23 @@
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+        return solve(preorder, 0 , n-1 , inorder , 0, n-1);
+        
+    }
+    public TreeNode solve(int []preorder, int preLow ,int preHigh ,int inorder[] ,int inLow, int inHigh){
+        if(preLow > preHigh){
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[preLow]);
+        int i = inLow;
+        while(inorder[i] != preorder[preLow]){
+            i++;
+        }
+        int left = i-inLow;
+        root.left = solve(preorder , preLow+1 , preLow+left , inorder , inLow, i-1);
+        root.right = solve(preorder , preLow + left + 1, preHigh,inorder, i+1 , inHigh);
+        return root;
+
+    }
+
+}
